@@ -8,7 +8,7 @@ public class MessageBar extends DefaultComponent {
 	
 	public MessageBar(int x, int y, int length) {
 		super(x, y, Sprite.MESSAGEBAR);
-		extra = length - sprite.getWidth() * 2;
+		extra = length - unpress.getWidth() * 2;
 	}
 
 	public void update() {
@@ -16,15 +16,15 @@ public class MessageBar extends DefaultComponent {
 	}
 
 	public void renderAll() {
-		renderSprite(sprite, getX(), getY());
-		for(int y = 0; y < sprite.getHeight(); y++) {
+		renderSprite(unpress, getX(), getY());
+		for(int y = 0; y < unpress.getHeight(); y++) {
         	for(int x = 0; x < extra; x++) {
-        		renderPixel(getX() + x + sprite.getWidth(), getY() + y, sprite.getPixel(sprite.getWidth() - 1, y));
+        		renderPixel(getX() + x + unpress.getWidth(), getY() + y, unpress.getPixel(unpress.getWidth() - 1, y));
         	}
         }
-		for(int y = 0; y < sprite.getHeight(); y++) {
-        	for(int x = 0; x < sprite.getWidth(); x++) {
-        		renderPixel(getX() + x + sprite.getWidth() + extra, getY() + y, sprite.getPixel(sprite.getWidth() - x - 1, y));
+		for(int y = 0; y < unpress.getHeight(); y++) {
+        	for(int x = 0; x < unpress.getWidth(); x++) {
+        		renderPixel(getX() + x + unpress.getWidth() + extra, getY() + y, unpress.getPixel(unpress.getWidth() - x - 1, y));
         	}
         }
 	}

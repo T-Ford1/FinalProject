@@ -10,13 +10,13 @@ public class Settings extends DefaultComponent {
 	
 	public Settings(int x, int y) {
 		super(x, y, Sprite.SETTINGS);
-		sprite.setColor(Color.black);
-		((ColorSprite) sprite).addColorScheme(Color.black, new ColorFader(Sprite.RAINBOW));
+		unpress.setColor(Color.black);
+		((ColorSprite) unpress).addColorScheme(Color.black, new ColorFader(Sprite.RAINBOW));
 		priority = 3;
 	}
 
 	public void update() {
-		sprite.update();
+		unpress.update();
 		render = true;
 	}
 }

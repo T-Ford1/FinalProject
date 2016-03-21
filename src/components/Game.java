@@ -6,11 +6,9 @@ import graphics.Sprite;
 
 public class Game extends GraphicsComponent {
 
-    private final Dimension screen;
-
     public Game(Dimension s) {
         super(0, 0, Sprite.GAME);
-        screen = s;
+        bounds.setBounds(0, 0, s.width, s.height);
     }
 
     public void update() {
@@ -24,19 +22,19 @@ public class Game extends GraphicsComponent {
     }
 
     public void renderAll() {
-        int xOff = (sprite.getWidth() - screen.width) / 2;
-        int yOff = (sprite.getHeight() - screen.height) / 2;
-        for (int y = 0; y < screen.height; y++) {
+        int xOff = (unpress.getWidth() - bounds.width) / 2;
+        int yOff = (unpress.getHeight() - bounds.height) / 2;
+        for (int y = 0; y < bounds.height; y++) {
             int yPos = y + yOff;
-            if (yPos < 0 | yPos >= sprite.getHeight()) {
+            if (yPos < 0 | yPos >= unpress.getHeight()) {
                 continue;
             }
-            for (int x = 0; x < screen.width; x++) {
+            for (int x = 0; x < bounds.width; x++) {
                 int xPos = x + xOff;
-                if (xPos < 0 | xPos >= sprite.getWidth()) {
+                if (xPos < 0 | xPos >= unpress.getWidth()) {
                     continue;
                 }
-                renderPixel(x, y, sprite.getPixel(xPos, yPos));
+                renderPixel(x, y, unpress.getPixel(xPos, yPos));
             }
         }
         render = false;

@@ -15,7 +15,7 @@ public abstract class DefaultComponent extends GraphicsComponent {
 	}
 
 	public void renderAll() {
-		renderSprite(sprite, getX(), getY());
+		renderSprite(unpress, getX(), getY());
 		render = false;
 	}
 }

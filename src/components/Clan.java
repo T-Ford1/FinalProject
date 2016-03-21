@@ -19,7 +19,7 @@ public class Clan extends DefaultComponent {
 	}
 
 	public void renderAll() {
-		super.renderSprite(sprite, getX(), getY());
+		super.renderSprite(unpress, getX(), getY());
 		render = false;
 	}
 }

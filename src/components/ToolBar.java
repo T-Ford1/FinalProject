@@ -32,7 +32,7 @@ public class ToolBar extends GraphicsComponent {
 
 	public void render() {
 		if(render) {
-			renderSprite(sprite, getX(), getY());
+			renderSprite(unpress, getX(), getY());
 			render = false;
 		}
 		add.render();
@@ -43,7 +43,7 @@ public class ToolBar extends GraphicsComponent {
 	}
 
 	public void renderAll() {
-		renderSprite(sprite, getX(), getY());
+		renderSprite(unpress, getX(), getY());
 		add.renderAll();
 		remove.renderAll();
 		upgrade.renderAll();
