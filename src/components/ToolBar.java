@@ -19,8 +19,6 @@ public class ToolBar extends GraphicsComponent {
 		upgrade = new Upgrade(getX() + 142, getY() + 4);
 		music = new Music(getX() + 211, getY() + 4);
 		ips = new IPs(getX() + 280, getY() + 4);
-		//items.add(new Settings(211, 4));
-		//items.add(new Settings(211, 4));
 	}
 
 	public void update() {

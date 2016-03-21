@@ -7,6 +7,9 @@ import graphics.Sprite;
 public class MenuBar extends GraphicsComponent {
 	
 	private final Settings setting;
+	private final Profile profile;
+	private final Clan clan;
+	private final Shield shield;
 	private final CPU cpu;
 	private final MessageBar mBar;
 	private final Temperature temp;
@@ -14,9 +17,9 @@ public class MenuBar extends GraphicsComponent {
 	public MenuBar(Dimension screen) {
 		super(0, 0, Sprite.MENUBAR);
 		setting = new Settings(5, 4);
-		//items.add(new Settings(74, 4));
-		//items.add(new Settings(143, 4));
-		//items.add(new Settings(212, 4));
+		profile = new Profile(73, 4);
+		clan = new Clan(142, 4);
+		shield = new Shield(211, 4);
 		int cX = 278;
 		int cL = screen.width / 3 - 278;
 		cpu = new CPU(278, 0, cL);
@@ -29,6 +32,9 @@ public class MenuBar extends GraphicsComponent {
 
 	public void update() {
 		setting.update();
+		profile.update();
+		clan.update();
+		shield.update();
 		cpu.update();
 		mBar.update();
 		temp.update();
@@ -41,6 +47,9 @@ public class MenuBar extends GraphicsComponent {
 			render = false;
 		}
 		setting.render();
+		profile.render();
+		clan.render();
+		shield.render();
 		cpu.render();
 		mBar.render();
 		temp.render();
@@ -49,6 +58,9 @@ public class MenuBar extends GraphicsComponent {
 	public void renderAll() {
 		renderSprite(sprite, getX(), getY());
 		setting.renderAll();
+		profile.renderAll();
+		clan.renderAll();
+		shield.renderAll();
 		cpu.renderAll();
 		mBar.renderAll();
 		temp.renderAll();
