@@ -85,9 +85,9 @@ public class Timer extends JFrame implements Runnable, WindowListener {
 	
 	public void update() {
 		panel.update();
-		if(!panel.fullscreen) {
+		if(!panel.screen) {
 			dispose();
-			Main.start(false);
+			Main.start(!isUndecorated());
 		}
 	}
 	

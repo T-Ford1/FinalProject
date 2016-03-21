@@ -2,7 +2,7 @@ package components;
 
 import graphics.Sprite;
 
-public class MessageBar extends GraphicsComponent {
+public class MessageBar extends DefaultComponent {
 	
 	private int extra;
 	
@@ -13,10 +13,6 @@ public class MessageBar extends GraphicsComponent {
 
 	public void update() {
 		render = false;
-	}
-
-	public void render() {
-		if(render) renderAll();
 	}
 
 	public void renderAll() {

@@ -2,21 +2,17 @@ package components;
 
 import graphics.Sprite;
 
-public class CPUTemp extends GraphicsComponent {
+public class Temperature extends DefaultComponent {
 	
 	private int extra;
 	
-	public CPUTemp(int x, int y, int length) {
-		super(x, y, Sprite.CPUTEMP);
+	public Temperature(int x, int y, int length) {
+		super(x, y, Sprite.TEMPERATURE);
 		extra = length - sprite.getWidth() * 2;
 	}
 
 	public void update() {
-		sprite.update();
-	}
-
-	public void render() {
-		if(render) renderAll();
+		render = false;
 	}
 
 	public void renderAll() {

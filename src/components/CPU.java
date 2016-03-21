@@ -2,25 +2,19 @@ package components;
 
 import graphics.Sprite;
 
-public class CPU extends GraphicsComponent {
-
+public class CPU extends DefaultComponent {
+	
 	private final int extra;
 
 	public CPU(int x, int y, int length) {
 		super(x, y, Sprite.CPU);
-		extra = length - sprite.getWidth() * 2;
+		extra = length - 2 * sprite.getWidth();
 	}
 
 	public void update() {
 		render = false;
 	}
-
-	public void render() {
-		if (render) {
-			renderAll();
-		}
-	}
-
+	
 	public void renderAll() {
 		renderSprite(sprite, getX(), getY());
 		for(int y = 0; y < sprite.getHeight(); y++) {

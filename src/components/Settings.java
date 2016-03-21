@@ -6,7 +6,7 @@ import graphics.ColorFader;
 import graphics.ColorSprite;
 import graphics.Sprite;
 
-public class Settings extends GraphicsComponent {
+public class Settings extends DefaultComponent {
 	
 	public Settings(int x, int y) {
 		super(x, y, Sprite.SETTINGS);
@@ -18,16 +18,5 @@ public class Settings extends GraphicsComponent {
 	public void update() {
 		sprite.update();
 		render = true;
-	}
-
-	public void render() {
-		if(render) {
-			renderAll();
-		}
-	}
-
-	public void renderAll() {
-		renderSprite(sprite, getX(), getY());
-		render = false;
 	}
 }
