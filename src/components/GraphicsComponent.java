@@ -8,9 +8,8 @@ import java.awt.Point;
 
 public abstract class GraphicsComponent implements Comparable<GraphicsComponent> {
 
-    private Rectangle bounds;
-    private Renderable press, hover, unpress;
-    
+    protected Rectangle bounds;
+    protected Renderable press, hover, unpress;
     protected int priority;
     protected boolean pressed, hovered, render;
 

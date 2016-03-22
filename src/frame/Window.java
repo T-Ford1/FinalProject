@@ -15,7 +15,7 @@ public class Window extends Canvas {
 
     private static final long serialVersionUID = 1L;
 
-    public static Game window;
+    public static Background window;
     public static ToolBar icons;
     public static MenuBar tabs;
 
@@ -35,7 +35,7 @@ public class Window extends Canvas {
 
     public void init() {
         tabs = new MenuBar(getSize());
-        window = new Game(getSize());
+        window = new Background(getSize(), Type.STATIC);
         icons = new ToolBar(getSize());
         image = new BufferedImage(getSize().width, getSize().height, BufferedImage.TYPE_INT_RGB);
         renderAll();

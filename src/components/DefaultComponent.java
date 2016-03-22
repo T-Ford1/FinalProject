@@ -6,28 +6,28 @@ import graphics.SpriteSheet;
 
 public class DefaultComponent extends GraphicsComponent {
 
-	public DefaultComponent(int x, int y, Renderable s) {
-		super(x, y, s);
-	}
-	
-	public DefaultComponent(int x, int y, int index) {
-		super(x, y, SpriteSheet.COMPONENTS.getSprite(index, 0), SpriteSheet.COMPONENTS.getSprite(index, 1),SpriteSheet.COMPONENTS.getSprite(index, 2));
-	}
-	
-	public void update() {
-		render = hovered | pressed;
-		setHover(isInside(Window.mouse.getPoint()));
-		setPressed(hovered && Window.mouse.isPressed());
-	}
+    public DefaultComponent(int x, int y, Renderable s) {
+        super(x, y, s);
+    }
 
-	public void render() {
-		if(render) {
-			renderAll();
-		}
-	}
+    public DefaultComponent(int x, int y, int index) {
+        super(x, y, SpriteSheet.COMPONENTS.getSprite(index, 0), SpriteSheet.COMPONENTS.getSprite(index, 1), SpriteSheet.COMPONENTS.getSprite(index, 2));
+    }
 
-	public void renderAll() {
-		renderSprite();
-		render = false;
-	}
+    public void update() {
+        render = hovered | pressed;
+        setHover(isInside(Window.mouse.getPoint()));
+        setPressed(hovered && Window.mouse.isPressed());
+    }
+
+    public void render() {
+        if (render) {
+            renderAll();
+        }
+    }
+
+    public void renderAll() {
+        renderSprite();
+        render = false;
+    }
 }

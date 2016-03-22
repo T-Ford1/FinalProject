@@ -17,7 +17,7 @@ public abstract class Sprite implements Renderable {
 	
 	public static final Sprite RAINBOW = new ColorSprite("res/animations/rainbow.png");
 	public static final Sprite TAB = new ColorSprite("res/components/tabs.png");
-	public static final Sprite GAME = new ColorSprite("res/containers/game.png");
+        public static final Sprite GAME_STATIC = new ColorSprite("res/containers/game_static.png");
 	public static final Sprite TOOLBAR = new ColorSprite("res/containers/toolbar.png");
 	public static final Sprite MENUBAR = new ColorSprite("res/containers/menubar.png");
 	public static final Sprite DEFAULT = new ColorSprite(Color.blue, 32, 32);
