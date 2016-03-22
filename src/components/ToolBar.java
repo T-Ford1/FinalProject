@@ -3,7 +3,6 @@ package components;
 import java.awt.Dimension;
 
 import graphics.Sprite;
-import graphics.SpriteSheet;
 
 public class ToolBar extends GraphicsComponent {
 	
@@ -15,16 +14,15 @@ public class ToolBar extends GraphicsComponent {
 	
 	public ToolBar(Dimension screen) {
 		super(screen.width - Sprite.TOOLBAR.getWidth(), screen.height - Sprite.TOOLBAR.getHeight(), Sprite.TOOLBAR);
-		SpriteSheet sprites = SpriteSheet.COMPONENTS;
-		add = new DefaultComponent(getX() + 5, getY() + 4, sprites.getSprite(4, 0), sprites.getSprite(4, 1), sprites.getSprite(4, 2));
-		remove = new DefaultComponent(getX() + 73, getY() + 4, sprites.getSprite(5, 0), sprites.getSprite(5, 1), sprites.getSprite(5, 2));
-		upgrade = new DefaultComponent(getX() + 142, getY() + 4, sprites.getSprite(6, 0), sprites.getSprite(6, 1), sprites.getSprite(6, 2));
-		music = new DefaultComponent(getX() + 211, getY() + 4, sprites.getSprite(7, 0), sprites.getSprite(7, 1), sprites.getSprite(7, 2));
-		ips = new DefaultComponent(getX() + 280, getY() + 4, sprites.getSprite(8, 0), sprites.getSprite(8, 1), sprites.getSprite(8, 2));
+		add = new DefaultComponent(getX() + 5, getY() + 4, 4);
+		remove = new DefaultComponent(getX() + 73, getY() + 4, 5);
+		upgrade = new DefaultComponent(getX() + 142, getY() + 4, 6);
+		music = new DefaultComponent(getX() + 211, getY() + 4, 7);
+		ips = new DefaultComponent(getX() + 280, getY() + 4, 8);
+		render = false;
 	}
 
 	public void update() {
-		render = false;
 		add.update();
 		remove.update();
 		upgrade.update();

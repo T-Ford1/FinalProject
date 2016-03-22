@@ -3,7 +3,6 @@ package components;
 import java.awt.Dimension;
 
 import graphics.Sprite;
-import graphics.SpriteSheet;
 
 public class MenuBar extends GraphicsComponent {
 
@@ -17,11 +16,10 @@ public class MenuBar extends GraphicsComponent {
 
     public MenuBar(Dimension screen) {
         super(0, 0, Sprite.MENUBAR);
-        SpriteSheet sprites = SpriteSheet.COMPONENTS;
-        setting = new DefaultComponent(5, 4, sprites.getSprite(0, 0), sprites.getSprite(0, 1), sprites.getSprite(0, 2));
-        profile = new DefaultComponent(74, 4, sprites.getSprite(1, 0), sprites.getSprite(1, 1), sprites.getSprite(1, 2));
-        clan = new DefaultComponent(143, 4, sprites.getSprite(2, 0), sprites.getSprite(2, 1), sprites.getSprite(2, 2));
-        shield = new DefaultComponent(212, 4, sprites.getSprite(3, 0), sprites.getSprite(3, 1), sprites.getSprite(3, 2));
+        setting = new DefaultComponent(5, 4, 0);
+        profile = new DefaultComponent(74, 4, 1);
+        clan = new DefaultComponent(143, 4, 2);
+        shield = new DefaultComponent(212, 4, 3);
         int cX = 278;
         int cL = Math.max(174, screen.width / 3 - 278);
         cpu = new Tab(Sprite.TAB, 278, 0, cL);

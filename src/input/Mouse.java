@@ -1,6 +1,7 @@
 
 package input;
 
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -12,7 +13,7 @@ import java.awt.event.MouseMotionListener;
 public class Mouse implements MouseMotionListener, MouseListener {
     
     private int x, y, b;
-    private boolean clicked;
+    private boolean pressed, moved, clicked;
     
     public Mouse() {
         x = -1;
@@ -21,30 +22,34 @@ public class Mouse implements MouseMotionListener, MouseListener {
     }
 
     public void mouseDragged(MouseEvent me) {
+    	moved = true;
         x = me.getX();
         y = me.getY();
     }
 
     public void mouseMoved(MouseEvent me) {
+    	moved = true;
         x = me.getX();
         y = me.getY();
     }
 
     public void mouseClicked(MouseEvent me) {
         b = me.getButton();
+        pressed = true;
         clicked = true;
     }
 
     public void mousePressed(MouseEvent me) {
         b = me.getButton();
+        pressed = true;
     }
 
     public void mouseReleased(MouseEvent me) {
+    	pressed = false;
         b = -1;
     }
 
     public void mouseEntered(MouseEvent me) {
-
     }
 
     public void mouseExited(MouseEvent me) {
@@ -52,10 +57,12 @@ public class Mouse implements MouseMotionListener, MouseListener {
     }
     
     public void update() {
+        b = -1;
         if(clicked) {
-            b = -1;
+        	pressed = false;
+        	clicked = false;
         }
-        clicked = false;
+        moved = false;
     }
     
     public int getX() {
@@ -66,7 +73,19 @@ public class Mouse implements MouseMotionListener, MouseListener {
         return y;
     }
     
+    public Point getPoint() {
+    	return new Point(x, y);
+    }
+    
     public int getButton() {
         return b;
+    }
+    
+    public boolean isPressed() {
+    	return pressed;
+    }
+    
+    public boolean isMoved() {
+    	return moved;
     }
 }

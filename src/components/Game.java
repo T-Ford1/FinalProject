@@ -8,8 +8,7 @@ import graphics.Sprite;
 public class Game extends GraphicsComponent {
 
 	public Game(Dimension s) {
-		super(0, 0, Sprite.GAME);
-		bounds.setBounds(0, 0, s.width, s.height);
+		super(0, 0, s.width, s.height, Sprite.GAME, Sprite.GAME, Sprite.GAME);
 	}
 
 	public void update() {

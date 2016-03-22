@@ -8,17 +8,18 @@ import java.awt.Point;
 
 public abstract class GraphicsComponent implements Comparable<GraphicsComponent> {
 
-    public Rectangle bounds;
-    public Renderable press, unpress, hover;
-    public boolean render;
-
+    private Rectangle bounds;
+    private Renderable press, hover, unpress;
+    
     protected int priority;
-    protected boolean pressed, hovered;
+    protected boolean pressed, hovered, render;
 
-    public GraphicsComponent(int x, int y, int width, int height, Renderable u, Renderable p, Renderable h) {
+    public GraphicsComponent(int x, int y, int width, int height, Renderable u, Renderable h, Renderable p) {
         render = true;
         bounds = new Rectangle(x, y, width, height);
         priority = 1;
+        press = p;
+        hover = h;
         unpress = u;
         pressed = false;
         hovered = false;
@@ -65,19 +66,19 @@ public abstract class GraphicsComponent implements Comparable<GraphicsComponent>
     	return !hovered ? unpress : !pressed ? hover : press;
     }
 
-    public int getX() {
+    protected int getX() {
         return bounds.x;
     }
 
-    public int getY() {
+    protected int getY() {
         return bounds.y;
     }
 
-    public int getWidth() {
+    protected int getWidth() {
         return bounds.width;
     }
 
-    public int getHeight() {
+    protected int getHeight() {
         return bounds.height;
     }
 
@@ -85,20 +86,12 @@ public abstract class GraphicsComponent implements Comparable<GraphicsComponent>
         return bounds.contains(mouse);
     }
 
-    public void onHover(Point mouse) {
-        hovered = true;
+    protected final void setHover(boolean h) {
+        hovered = h;
     }
 
-    public void onLeave(Point mouse) {
-        hovered = false;
-    }
-
-    public void onPress(Point mouse) {
-        pressed = true;
-    }
-
-    public void onRelease(Point mouse) {
-        pressed = false;
+    protected final void setPressed(boolean p) {
+        pressed = p;
     }
 
     public int compareTo(GraphicsComponent c) {

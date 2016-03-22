@@ -1,32 +1,23 @@
 package components;
 
+import frame.Window;
 import graphics.Renderable;
-import graphics.Sprite;
+import graphics.SpriteSheet;
 
 public class DefaultComponent extends GraphicsComponent {
-	
-	public DefaultComponent(int x, int y, int width, int height, Renderable u, Renderable p, Renderable h) {
-		super(x, y, width, height, u, p, h);
-	}
-	
-	public DefaultComponent(int x, int y, Renderable u, Renderable p, Renderable h) {
-		this(x, y, u.getWidth(), u.getHeight(), u, p, h);
-	}
 
 	public DefaultComponent(int x, int y, Renderable s) {
-		this(x, y, s, s, s);
+		super(x, y, s);
 	}
 	
-	public DefaultComponent(int x, int y) {
-		this(x, y, Sprite.DEFAULT);
-	}
-	
-	public DefaultComponent() {
-		this(0, 0);
+	public DefaultComponent(int x, int y, int index) {
+		super(x, y, SpriteSheet.COMPONENTS.getSprite(index, 0), SpriteSheet.COMPONENTS.getSprite(index, 1),SpriteSheet.COMPONENTS.getSprite(index, 2));
 	}
 	
 	public void update() {
-		render = false;
+		render = hovered | pressed;
+		setHover(isInside(Window.mouse.getPoint()));
+		setPressed(hovered && Window.mouse.isPressed());
 	}
 
 	public void render() {

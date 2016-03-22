@@ -50,14 +50,14 @@ public class Window extends Canvas {
     }
 
     public void update() {
+    	if (keys.isPressed(KeyEvent.VK_ESCAPE)) {
+            screen = false;
+        }
         tabs.update();
         window.update();
         icons.update();
-        if (keys.isPressed(KeyEvent.VK_ESCAPE)) {
-            screen = false;
-        }
         keys.update();
-        mouse.update();
+    	mouse.update();
     }
 
     public void render() {
