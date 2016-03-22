@@ -3,22 +3,24 @@ package components;
 import java.awt.Dimension;
 
 import graphics.Sprite;
+import graphics.SpriteSheet;
 
 public class ToolBar extends GraphicsComponent {
 	
-	private final Add add;
-	private final Remove remove;
-	private final Upgrade upgrade;
-	private final Music music;
-	private final IPs ips;
+	private final DefaultComponent add;
+	private final DefaultComponent remove;
+	private final DefaultComponent upgrade;
+	private final DefaultComponent music;
+	private final DefaultComponent ips;
 	
 	public ToolBar(Dimension screen) {
 		super(screen.width - Sprite.TOOLBAR.getWidth(), screen.height - Sprite.TOOLBAR.getHeight(), Sprite.TOOLBAR);
-		add = new Add(getX() + 5, getY() + 4);
-		remove = new Remove(getX() + 73, getY() + 4);
-		upgrade = new Upgrade(getX() + 142, getY() + 4);
-		music = new Music(getX() + 211, getY() + 4);
-		ips = new IPs(getX() + 280, getY() + 4);
+		SpriteSheet sprites = SpriteSheet.COMPONENTS;
+		add = new DefaultComponent(getX() + 5, getY() + 4, sprites.getSprite(4, 0), sprites.getSprite(4, 1), sprites.getSprite(4, 2));
+		remove = new DefaultComponent(getX() + 73, getY() + 4, sprites.getSprite(5, 0), sprites.getSprite(5, 1), sprites.getSprite(5, 2));
+		upgrade = new DefaultComponent(getX() + 142, getY() + 4, sprites.getSprite(6, 0), sprites.getSprite(6, 1), sprites.getSprite(6, 2));
+		music = new DefaultComponent(getX() + 211, getY() + 4, sprites.getSprite(7, 0), sprites.getSprite(7, 1), sprites.getSprite(7, 2));
+		ips = new DefaultComponent(getX() + 280, getY() + 4, sprites.getSprite(8, 0), sprites.getSprite(8, 1), sprites.getSprite(8, 2));
 	}
 
 	public void update() {
@@ -32,7 +34,7 @@ public class ToolBar extends GraphicsComponent {
 
 	public void render() {
 		if(render) {
-			renderSprite(unpress, getX(), getY());
+			renderSprite();
 			render = false;
 		}
 		add.render();
@@ -43,7 +45,7 @@ public class ToolBar extends GraphicsComponent {
 	}
 
 	public void renderAll() {
-		renderSprite(unpress, getX(), getY());
+		renderSprite();
 		add.renderAll();
 		remove.renderAll();
 		upgrade.renderAll();

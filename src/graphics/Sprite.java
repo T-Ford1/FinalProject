@@ -15,23 +15,12 @@ import javax.imageio.ImageIO;
 
 public abstract class Sprite implements Renderable {
 	
-	public static final Sprite TEMPERATURE = new ColorSprite("res/images/messages.png");
-	public static final Sprite MESSAGEBAR = new ColorSprite("res/images/messages.png");
-	public static final Sprite SETTINGS = new ColorSprite("res/images/settings.png");
-	public static final Sprite PROFILE = new ColorSprite("res/images/profile.png");
-	public static final Sprite RAINBOW = new ColorSprite("res/images/rainbow.png");
-	public static final Sprite MENUBAR = new ColorSprite("res/images/menubar.png");
-	public static final Sprite TOOLBAR = new ColorSprite("res/images/toolbar.png");
-	public static final Sprite UPGRADE = new ColorSprite("res/images/upgrade.png");
-	public static final Sprite REMOVE = new ColorSprite("res/images/remove.png");
-	public static final Sprite SHIELD = new ColorSprite("res/images/shield.png");
-	public static final Sprite CPU = new ColorSprite("res/images/messages.png");
-	public static final Sprite MUSIC = new ColorSprite("res/images/music.png");
-	public static final Sprite CLAN = new ColorSprite("res/images/clan.png");
-	public static final Sprite GAME = new ColorSprite("res/images/game.png");
+	public static final Sprite RAINBOW = new ColorSprite("res/animations/rainbow.png");
+	public static final Sprite TAB = new ColorSprite("res/components/tabs.png");
+	public static final Sprite GAME = new ColorSprite("res/containers/game.png");
+	public static final Sprite TOOLBAR = new ColorSprite("res/containers/toolbar.png");
+	public static final Sprite MENUBAR = new ColorSprite("res/containers/menubar.png");
 	public static final Sprite DEFAULT = new ColorSprite(Color.blue, 32, 32);
-	public static final Sprite ADD = new ColorSprite("res/images/add.png");
-	public static final Sprite IPS = new ColorSprite("res/images/ips.png");
 
 	private final int WIDTH, HEIGHT;
 	private final int[] pixels;
@@ -51,7 +40,6 @@ public abstract class Sprite implements Renderable {
 	}
 
 	public Sprite(String p) {
-		//System.out.println("beginning sprite init of " + p.substring(1 + p.lastIndexOf("/")));
 		BufferedImage img = null;
 		try {
 			img = ImageIO.read(new File(p));

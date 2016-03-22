@@ -61,14 +61,14 @@ public class Window extends Canvas {
     }
 
     public void render() {
-        //window.render();
-        //tabs.render();
-        //icons.render();
+        window.render();
+        tabs.render();
+        icons.render();
     }
 
     public void renderAll() {
-        //window.renderAll();
-        //tabs.renderAll();
-        //icons.renderAll();
+        window.renderAll();
+        tabs.renderAll();
+        icons.renderAll();
     }
 }

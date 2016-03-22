@@ -38,31 +38,31 @@ public abstract class GraphicsComponent implements Comparable<GraphicsComponent>
 
     public abstract void renderAll();
 
-    public final void renderPixel(int xPos, int yPos, int spriteX, int spriteY) {
-        int pixel = 0;
-        if(pressed) {
-            pixel = press.getPixel(spriteX, spriteY);
-        }
-        if (pixel == 0xFF_FF_00_FF) {
+    protected final void renderPixel(int x, int y, int rX, int rY) {
+        renderPixel(x, y, getRenderable().getPixel(rX, rY));
+    }
+    
+    protected final void renderPixel(int x, int y, int rgb) {
+        if (rgb == 0xFF_FF_00_FF) {
             return;
         }
-        Window.renderPixel(x, y, pixel);
+        Window.renderPixel(getX() + x, getY() + y, rgb);
     }
 
-    public final void renderBox(int xOff, int yOff, int width, int height, int pixel) {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                renderPixel(xOff + x, yOff + y, pixel);
+    protected final void renderSprite() {
+        renderSprite(getRenderable());
+    }
+    
+    protected final void renderSprite(Renderable r) {
+    	for (int y = 0; y < r.getHeight(); y++) {
+            for (int x = 0; x < r.getWidth(); x++) {
+                renderPixel(x, y, r.getPixel(x, y));
             }
         }
     }
-
-    public void renderSprite(Renderable sprite, int xOff, int yOff) {
-        for (int y = 0; y < sprite.getHeight(); y++) {
-            for (int x = 0; x < sprite.getWidth(); x++) {
-                renderPixel(xOff + x, yOff + y, sprite.getPixel(x, y));
-            }
-        }
+    
+    protected Renderable getRenderable() {
+    	return !hovered ? unpress : !pressed ? hover : press;
     }
 
     public int getX() {

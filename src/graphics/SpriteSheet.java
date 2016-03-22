@@ -11,12 +11,13 @@ import javax.imageio.ImageIO;
  */
 public class SpriteSheet {
 	
-	public static final SpriteSheet NUMBER_64 = new SpriteSheet("res/images/number_64.png", 64, 120);
-    public static final SpriteSheet NUMBER_32 = new SpriteSheet("res/images/number_32.png", 32, 60);
-    public static final SpriteSheet NUMBER_16 = new SpriteSheet("res/images/number_16.png", 16, 30);
-    public static final SpriteSheet NUMBER_8 = new SpriteSheet("res/images/number_8.png", 8, 15);
-    public static final SpriteSheet LETTER_8 = new SpriteSheet("res/images/letter_8.png", 8, 8);
-    public static final SpriteSheet SYMBOL_8 = new SpriteSheet("res/images/symbol_8.png", 8, 8);
+	public static final SpriteSheet COMPONENTS = new SpriteSheet("res/components/components.png", 64);
+	public static final SpriteSheet NUMBER_64 = new SpriteSheet("res/animations/number_64.png", 64, 120);
+    public static final SpriteSheet NUMBER_32 = new SpriteSheet("res/animations/number_32.png", 32, 60);
+    public static final SpriteSheet NUMBER_16 = new SpriteSheet("res/animations/number_16.png", 16, 30);
+    public static final SpriteSheet NUMBER_8 = new SpriteSheet("res/animations/number_8.png", 8, 15);
+    public static final SpriteSheet LETTER_8 = new SpriteSheet("res/animations/letter_8.png", 8, 8);
+    public static final SpriteSheet SYMBOL_8 = new SpriteSheet("res/animations/symbol_8.png", 8, 8);
 
     private final String path;
     public final int COLUMNS, ROWS;
