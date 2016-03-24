@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import frame.Window;
 import graphics.Renderable;
 import java.awt.Point;
+import java.util.Random;
 
 public abstract class GraphicsComponent implements Comparable<GraphicsComponent> {
 
@@ -12,8 +13,10 @@ public abstract class GraphicsComponent implements Comparable<GraphicsComponent>
     protected Renderable press, hover, unpress;
     protected int priority;
     protected boolean pressed, hovered, render;
+    protected static final Random random = new Random();
 
     public GraphicsComponent(int x, int y, int width, int height, Renderable u, Renderable h, Renderable p) {
+    	Window.addComponent(this);
         render = true;
         bounds = new Rectangle(x, y, width, height);
         priority = 1;
@@ -42,21 +45,25 @@ public abstract class GraphicsComponent implements Comparable<GraphicsComponent>
         renderPixel(x, y, getRenderable().getPixel(rX, rY));
     }
     
-    protected final void renderPixel(int x, int y, int rgb) {
+    protected void renderPixel(int x, int y, int rgb) {
         if (rgb == 0xFF_FF_00_FF) {
             return;
         }
         Window.renderPixel(getX() + x, getY() + y, rgb);
     }
 
-    protected final void renderSprite() {
-        renderSprite(getRenderable());
+    protected void renderSprite() {
+        renderSprite(getRenderable(), 0, 0);
     }
     
-    protected final void renderSprite(Renderable r) {
+    protected void renderSprite(int xOff, int yOff) {
+        renderSprite(getRenderable(), xOff, yOff);
+    }
+    
+    protected void renderSprite(Renderable r, int xOff, int yOff) {
     	for (int y = 0; y < r.getHeight(); y++) {
             for (int x = 0; x < r.getWidth(); x++) {
-                renderPixel(x, y, r.getPixel(x, y));
+                renderPixel(x + xOff, y + yOff, r.getPixel(x, y));
             }
         }
     }
@@ -95,5 +102,9 @@ public abstract class GraphicsComponent implements Comparable<GraphicsComponent>
 
     public int compareTo(GraphicsComponent c) {
         return priority - c.priority;
+    }
+    
+    public void setRender(boolean render) {
+        render = true;
     }
 }

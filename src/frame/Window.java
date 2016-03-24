@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import components.*;
 import input.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,10 +16,8 @@ public class Window extends Canvas {
 
     private static final long serialVersionUID = 1L;
 
-    public static Background window;
-    public static ToolBar icons;
-    public static MenuBar tabs;
 
+    private static ArrayList<GraphicsComponent> components;
     protected boolean screen;
 
     public static Keyboard keys;
@@ -31,18 +30,27 @@ public class Window extends Canvas {
         addKeyListener(keys = new Keyboard());
         addMouseListener(mouse = new Mouse());
         addMouseMotionListener(mouse);
+        components = new ArrayList<>();
     }
 
     public void init() {
-        tabs = new MenuBar(getSize());
-        window = new Background(getSize(), Type.STATIC);
-        icons = new ToolBar(getSize());
+    	new Background(getSize(), Type.SHIFTING);
+        new MenuBar(getSize());
+        new ToolBar(getSize());
         image = new BufferedImage(getSize().width, getSize().height, BufferedImage.TYPE_INT_RGB);
         renderAll();
     }
 
     public static void renderPixel(int x, int y, int rgb) {
         image.setRGB(x, y, rgb);
+    }
+    
+    public static int getPixel(int x, int y) {
+    	return image.getRGB(x, y);
+    }
+    
+    public static void addComponent(GraphicsComponent g) {
+    	components.add(g);
     }
 
     protected static BufferedImage getImage() {
@@ -53,22 +61,22 @@ public class Window extends Canvas {
     	if (keys.isPressed(KeyEvent.VK_ESCAPE)) {
             screen = false;
         }
-        tabs.update();
-        window.update();
-        icons.update();
+        for(GraphicsComponent c : components) {
+        	c.update();
+        }
         keys.update();
-    	mouse.update();
+        mouse.update();
     }
 
     public void render() {
-        window.render();
-        tabs.render();
-        icons.render();
+    	for(GraphicsComponent c : components) {
+        	c.render();
+        }
     }
 
     public void renderAll() {
-        window.renderAll();
-        tabs.renderAll();
-        icons.renderAll();
+    	for(GraphicsComponent c : components) {
+        	c.renderAll();
+        }
     }
 }
