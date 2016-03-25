@@ -5,17 +5,23 @@ import java.awt.Dimension;
 
 import graphics.Sprite;
 import graphics.SpriteSheet;
-import java.awt.Point;
-import java.util.Stack;
 
 import frame.Window;
+import graphics.BGSprite;
+import graphics.ColorFader;
+import graphics.ColorSprite;
+import java.awt.Color;
+import java.util.ArrayList;
 
 public class Background extends GraphicsComponent {
+    
+    private final ColorSprite zero_to_one, one_to_zero;
 
     private final Type type;
     private final boolean[][] numbers;
     private int update;
-    private final Stack<Point> points;
+    public static ArrayList<BGSprite> renders;
+    
 
     public Background(Dimension s, Type t) {
         super(0, 72, s.width, s.height, Sprite.GAME_STATIC, SpriteSheet.GAME.getSprite(0, 0), SpriteSheet.GAME.getSprite(1, 0));
@@ -23,26 +29,40 @@ public class Background extends GraphicsComponent {
         int wd = getWidth() / press.getWidth() + 1;
         int he = getHeight() / press.getHeight() + 1;
         numbers = new boolean[he][wd];
-        points = new Stack<>();
+        renders = new ArrayList<>();
         for (int y = 0; y < numbers.length; y++) {
             for (int x = 0; x < numbers[y].length; x++) {
                 numbers[y][x] = (y + x) % 2 == 0;
-                points.push(new Point(x, y));
+                renders.add(numbers[y][x] ? new BGSprite(hover, 1, x, y) : new BGSprite(press, 1, x, y));
             }
         }
-        
+        zero_to_one = new ColorSprite(SpriteSheet.DIGIT_SHIFT.getSprite(0, 0));
+        one_to_zero = new ColorSprite(SpriteSheet.DIGIT_SHIFT.getSprite(1, 0));
+        zero_to_one.addColorScheme(0xFF_00_00_00, new ColorFader(Sprite.BLACK_TO_GREEN));
+        zero_to_one.addColorScheme(0xFF_30_BB_2D, new ColorFader(Sprite.GREEN_TO_BLACK));
+        one_to_zero.addColorScheme(0xFF_00_00_00, new ColorFader(Sprite.BLACK_TO_GREEN));
+        one_to_zero.addColorScheme(0xFF_30_BB_2D, new ColorFader(Sprite.GREEN_TO_BLACK));
         update = 0;
     }
 
     public void update() {
+        press.update();
+        hover.update();
         if (type != Type.STATIC & (++update % (random.nextInt(90) + 20) == 0)) {
             update = 0;
             int y = random.nextInt(numbers.length);
             int x = random.nextInt(numbers[y].length);
             numbers[y][x] = !numbers[y][x];
-            points.push(new Point(x, y));
+            renders.add(numbers[y][x] ? new BGSprite(zero_to_one, 51, x, y) : new BGSprite(one_to_zero, 51, x, y));
         }
-        render = !points.isEmpty();
+        for (int i = 0; i < renders.size(); i++) {
+            BGSprite s = renders.get(i);
+            s.update();
+            if(s.renderedLast()) {
+                renders.remove(i--);
+            }
+        }
+        render = !renders.isEmpty();
     }
 
     public void render() {
@@ -83,15 +103,14 @@ public class Background extends GraphicsComponent {
     private void renderShifting() {
         int xOff = (numbers[0].length * 72 - getWidth()) / 2;
         int yOff = (numbers.length * 128 - getHeight()) / 2;
-        while(!points.isEmpty()) {
-            Point p = points.pop();
-            int yPos = p.y * 128 - yOff;
-            int xPos = p.x * 72 - xOff;
-            if (yPos + 128 < 0 | yPos >= getHeight() | xPos + 72 < 0 | xPos >= getWidth()) {
-                continue;
+        renders.stream().forEach(s -> {
+            int yPos = s.getY() * 128 - yOff;
+            int xPos = s.getX() * 72 - xOff;
+            if (!(yPos + 128 < 0 | yPos >= getHeight() | xPos + 72 < 0 | xPos >= getWidth())) {
+                renderSprite(s, xPos, yPos);
             }
-            renderSprite(numbers[p.y][p.x] ? hover : press, xPos, yPos);
-        }
+            s.updateRender();
+        });
     }
 
     private void renderMoving() {
@@ -112,7 +131,7 @@ public class Background extends GraphicsComponent {
     
     protected void renderPixel(int xPos, int yPos, int rgb) {
     	int replaced = Window.getPixel(xPos, yPos);
-    	if(replaced == 0xFF_00_00_00 || replaced == 0xFF_30_BB_2D) {
+    	if(rgb != 0xFF_FF_00_FF && (replaced == 0xFF_00_00_00 || replaced == 0xFF_30_BB_2D)) {
     		Window.renderPixel(xPos, yPos, rgb);
     	}
     }

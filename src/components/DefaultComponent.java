@@ -27,7 +27,7 @@ public class DefaultComponent extends GraphicsComponent {
     }
 
     public void renderAll() {
-        renderSprite();
+        //renderSprite();
         render = false;
     }
 }

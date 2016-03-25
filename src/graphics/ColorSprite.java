@@ -5,40 +5,49 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public class ColorSprite extends Sprite {
-	
-	private ColorScheme cs;
-	
-	protected ColorSprite(int x, int y, int w, int h, BufferedImage img) {
-		super(x, y, w, h, img);
-		cs = new ColorScheme();
-	}
 
-	public ColorSprite(String p) {
-		super(p);
-		cs = new ColorScheme();
-	}
-	
-	public ColorSprite(Color c, int w, int h) {
-		super(c, w, h);
-		cs = new ColorScheme();
-	}
-	
-	public int getPixel(int x, int y) {
-		return cs.peek(new Color(super.getPixel(x, y))).getRGB();
-	}
-	
-	public void update() {
-		updateColorSchemes();
-	}
+    protected final ColorScheme schemes;
+    private int update;
 
-	private void updateColorSchemes() {
-		HashMap<Color, ColorFader> schemes = cs.getSchemes();
-		for (ColorFader i : schemes.values()) {
-			i.next();
-		}
-	}
+    protected ColorSprite(int x, int y, int w, int h, BufferedImage img) {
+        super(x, y, w, h, img);
+        schemes = new ColorScheme();
+        update = 0;
+    }
 
-	public void addColorScheme(Color color, ColorFader colors) {
-		cs.getSchemes().put(color, colors);
-	}
+    public ColorSprite(String p) {
+        super(p);
+        schemes = new ColorScheme();
+        update = 0;
+    }
+
+    public ColorSprite(Renderable r) {
+        super(r);
+        schemes = new ColorScheme();
+        if(r instanceof ColorSprite) {
+            ColorSprite sprite = (ColorSprite) r;
+            HashMap<Integer, ColorFader> map = sprite.schemes.getSchemes();
+            map.keySet().stream().forEach((c) -> {
+                addColorScheme(c, new ColorFader(map.get(c)));
+            });
+        }
+    }
+
+    public ColorSprite(Color c, int w, int h) {
+        super(c, w, h);
+        schemes = new ColorScheme();
+    }
+
+    public int getPixel(int x, int y) {
+        return schemes.get(super.getPixel(x, y));
+    }
+
+    public void update() {
+        schemes.update();
+        update++;
+    }
+
+    public final void addColorScheme(int color, ColorFader colors) {
+        schemes.getSchemes().put(color, colors);
+    }
 }

@@ -12,15 +12,15 @@ public class Tab extends DefaultComponent {
     }
 
     public void renderAll() {
-        renderSprite();
+        //renderSprite();
         for (int y = 0; y < getHeight(); y++) {
             for (int x = 0; x < extra; x++) {
-                renderPixel(x + getWidth(), y, getWidth() - 1, y);
+                //renderPixel(x + getWidth(), y, getWidth() - 1, y);
             }
         }
         for (int y = 0; y < getHeight(); y++) {
             for (int x = 0; x < getWidth(); x++) {
-                renderPixel(x + getWidth() + extra, y, getWidth() - x - 1, y);
+                //renderPixel(x + getWidth() + extra, y, getWidth() - x - 1, y);
             }
         }
     }

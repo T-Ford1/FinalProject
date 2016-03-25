@@ -13,6 +13,7 @@ public class SpriteSheet {
 
     public static final SpriteSheet GAME = new SpriteSheet("res/containers/game.png", 72, 128);
     public static final SpriteSheet COMPONENTS = new SpriteSheet("res/components/components.png", 64);
+    public static final SpriteSheet DIGIT_SHIFT = new SpriteSheet("res/animations/digitshift.png", 72, 128);
     public static final SpriteSheet NUMBER_64 = new SpriteSheet("res/animations/number_64.png", 64, 120);
     public static final SpriteSheet NUMBER_32 = new SpriteSheet("res/animations/number_32.png", 32, 60);
     public static final SpriteSheet NUMBER_16 = new SpriteSheet("res/animations/number_16.png", 16, 30);

@@ -16,7 +16,6 @@ public class Window extends Canvas {
 
     private static final long serialVersionUID = 1L;
 
-
     private static ArrayList<GraphicsComponent> components;
     protected boolean screen;
 
@@ -34,7 +33,7 @@ public class Window extends Canvas {
     }
 
     public void init() {
-    	new Background(getSize(), Type.SHIFTING);
+        new Background(getSize(), Type.SHIFTING);
         new MenuBar(getSize());
         new ToolBar(getSize());
         image = new BufferedImage(getSize().width, getSize().height, BufferedImage.TYPE_INT_RGB);
@@ -44,13 +43,13 @@ public class Window extends Canvas {
     public static void renderPixel(int x, int y, int rgb) {
         image.setRGB(x, y, rgb);
     }
-    
+
     public static int getPixel(int x, int y) {
-    	return image.getRGB(x, y);
+        return image.getRGB(x, y);
     }
-    
+
     public static void addComponent(GraphicsComponent g) {
-    	components.add(g);
+        components.add(g);
     }
 
     protected static BufferedImage getImage() {
@@ -58,25 +57,25 @@ public class Window extends Canvas {
     }
 
     public void update() {
-    	if (keys.isPressed(KeyEvent.VK_ESCAPE)) {
+        if (keys.isPressed(KeyEvent.VK_ESCAPE)) {
             screen = false;
         }
-        for(GraphicsComponent c : components) {
-        	c.update();
+        for (GraphicsComponent c : components) {
+            c.update();
         }
         keys.update();
         mouse.update();
     }
 
     public void render() {
-    	for(GraphicsComponent c : components) {
-        	c.render();
+        for (GraphicsComponent c : components) {
+            c.render();
         }
     }
 
     public void renderAll() {
-    	for(GraphicsComponent c : components) {
-        	c.renderAll();
+        for (GraphicsComponent c : components) {
+            c.renderAll();
         }
     }
 }
