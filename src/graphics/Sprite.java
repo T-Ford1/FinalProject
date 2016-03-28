@@ -14,8 +14,6 @@ import javax.imageio.ImageIO;
 public abstract class Sprite implements Renderable {
 
     public static final Sprite RAINBOW = new ColorSprite("res/animations/rainbow.png");
-    public static final Sprite GREEN_TO_BLACK = new ColorSprite("res/animations/greentoblack.png");
-    public static final Sprite BLACK_TO_GREEN = new ColorSprite("res/animations/blacktogreen.png");
     public static final Sprite TAB = new ColorSprite("res/components/tabs.png");
     public static final Sprite GAME_STATIC = new ColorSprite("res/containers/game_static.png");
     public static final Sprite TOOLBAR = new ColorSprite("res/containers/toolbar.png");
@@ -90,8 +88,6 @@ public abstract class Sprite implements Renderable {
             pixels[i] = pixels[i] == old.getRGB() ? next.getRGB() : pixels[i];
         }
     }
-
-    public abstract void update();
 
     public int getHeight() {
         return HEIGHT;

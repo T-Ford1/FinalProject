@@ -16,7 +16,8 @@ public class ColorScheme {
     
     public int get(int color) {
         ColorFader c = fades.get(color);
-        return c == null ? color : c.get();
+        int select = c == null ? color : c.get();
+        return select;
     }
     
     public void update() {

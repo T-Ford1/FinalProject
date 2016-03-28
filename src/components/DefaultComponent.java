@@ -15,9 +15,12 @@ public class DefaultComponent extends GraphicsComponent {
     }
 
     public void update() {
-        render = render ? render : hovered | pressed;
+        render = render ? render : hovered | pressed | alwaysRender;
         setHover(isInside(Window.mouse.getPoint()));
         setPressed(hovered && Window.mouse.isPressed());
+        unpress.update();
+        press.update();
+        hover.update();
     }
 
     public void render() {
@@ -27,7 +30,7 @@ public class DefaultComponent extends GraphicsComponent {
     }
 
     public void renderAll() {
-        //renderSprite();
+        renderSprite();
         render = false;
     }
 }

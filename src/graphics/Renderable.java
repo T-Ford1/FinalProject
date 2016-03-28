@@ -22,4 +22,6 @@ public interface Renderable {
 	public int getWidth();
 	
 	public BufferedImage getImage();
+	
+	public Renderable copyOf();
 }

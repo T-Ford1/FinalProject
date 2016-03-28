@@ -12,12 +12,13 @@ public abstract class GraphicsComponent implements Comparable<GraphicsComponent>
     protected Rectangle bounds;
     protected Renderable press, hover, unpress;
     protected int priority;
-    protected boolean pressed, hovered, render;
+    protected boolean pressed, hovered, render, alwaysRender;
     protected static final Random random = new Random();
 
     public GraphicsComponent(int x, int y, int width, int height, Renderable u, Renderable h, Renderable p) {
     	Window.addComponent(this);
         render = true;
+        alwaysRender = false;
         bounds = new Rectangle(x, y, width, height);
         priority = 1;
         press = p;
@@ -66,6 +67,14 @@ public abstract class GraphicsComponent implements Comparable<GraphicsComponent>
                 renderPixel(x + xOff, y + yOff, r.getPixel(x, y));
             }
         }
+    }
+    
+    public void setAlwaysRender() {
+    	alwaysRender = true;
+    }
+    
+    public boolean isAlwaysRender() {
+    	return alwaysRender;
     }
     
     protected Renderable getRenderable() {

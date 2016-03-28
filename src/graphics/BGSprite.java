@@ -5,14 +5,13 @@ package graphics;
  * @author ford.terrell
  */
 public class BGSprite extends ColorSprite {
-    
-    private int updates;
-    private boolean renderedLastFrame;
-    private final int x, y;
 
-    public BGSprite(Renderable r, int rndr, int x, int y) {
+    private boolean renderedLastFrame;
+    private int x, y, updates;
+
+    public BGSprite(Renderable r, int u, int x, int y) {
         super(r);
-        updates = rndr;
+        updates = u;
         this.x = x;
         this.y = y;
     }
@@ -36,5 +35,15 @@ public class BGSprite extends ColorSprite {
     
     public int getY() {
         return y;
+    }
+    
+    public BGSprite copyOf() {
+    	return new BGSprite(this, updates, x, y);
+    }
+    
+    public BGSprite setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+        return this;
     }
 }
