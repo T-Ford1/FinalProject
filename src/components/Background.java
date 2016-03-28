@@ -1,6 +1,5 @@
 package components;
 
-import frame.Window;
 import graphics.Renderable;
 
 import java.awt.Color;
@@ -55,34 +54,39 @@ public class Background extends GraphicsComponent {
         b.addColorScheme(0xFF_00_00_00, new ColorFader(btg));
         a.addColorScheme(0xFF_30_BB_2D, new ColorFader(gtb));
         b.addColorScheme(0xFF_30_BB_2D, new ColorFader(gtb));
-        zero = new BGSprite(b, btg.length, 0, 0);
-        one = new BGSprite(a, btg.length, 0, 0);
+        zero = new BGSprite(b, btg.length - 1, 0, 0);
+        one = new BGSprite(a, btg.length - 1, 0, 0);
     }
 
     public void update() {
         press.update();
         hover.update();
-        if (type != Type.STATIC & (++update % (random.nextInt(1) + 20) == 0)) {
-            update = 0;
-            int y = random.nextInt(numbers.length);
-            int x = random.nextInt(numbers[y].length);
-            numbers[y][x] = !numbers[y][x];
-            renders.add(numbers[y][x] ? zero.copyOf().setPosition(x, y) : one.copyOf().setPosition(x, y));
-        }
-        for (int i = 0; i < renders.size(); i++) {
-            BGSprite s = renders.get(i);
-            s.update();
-            if (s.renderedLast()) {
-                renders.remove(i--);
+        if (type == Type.SHIFTING) {
+            if (++update % (random.nextInt(1) + 20) == 0) {
+                update = 0;
+                int y = random.nextInt(numbers.length);
+                int x = random.nextInt(numbers[y].length);
+                numbers[y][x] = !numbers[y][x];
+                renders.add(numbers[y][x] ? zero.copyOf().setPosition(x, y) : one.copyOf().setPosition(x, y));
             }
+            for (int i = 0; i < renders.size(); i++) {
+                BGSprite s = renders.get(i);
+                s.update();
+                if (s.renderedLast()) {
+                    renders.remove(i--);
+                }
+            }
+            render = render ? render : !renders.isEmpty() | alwaysRender;
+        } else if(type == Type.MOVING) {
+            render = render ? render : alwaysRender;
+        } else {
+            render = render ? render : alwaysRender;
         }
-        render = !renders.isEmpty() | alwaysRender;
     }
 
     public void render() {
-        if (render) {
-            renderAll();
-        }
+        if(!render) return;
+        renderAll();
     }
 
     public void renderAll() {
@@ -150,7 +154,7 @@ public class Background extends GraphicsComponent {
     protected void renderPixel(int xPos, int yPos, int rgb) {
         //int replaced = Window.getPixel(xPos, yPos);
         //if ((replaced == 0xFF_00_00_00 || replaced == 0xFF_30_BB_2D)) {
-            super.renderPixel(xPos, yPos, rgb);
+        super.renderPixel(xPos, yPos, rgb);
         //}
     }
 }

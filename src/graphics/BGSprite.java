@@ -7,22 +7,23 @@ package graphics;
 public class BGSprite extends ColorSprite {
 
     private boolean renderedLastFrame;
-    private int x, y, updates;
+    private int x, y, updates, index;
 
     public BGSprite(Renderable r, int u, int x, int y) {
         super(r);
         updates = u;
+        index = 0;
         this.x = x;
         this.y = y;
     }
     
     public void update() {
         super.update();
-        updates--;
+        index = ++index > updates ? updates : index;
     }
     
     public void updateRender() {
-        renderedLastFrame = updates <= 1;
+        renderedLastFrame = index == updates;
     }
     
     public boolean renderedLast() {
@@ -48,7 +49,6 @@ public class BGSprite extends ColorSprite {
     }
     
     public int getPixel(int x, int y) {
-        System.out.println("getpixel");
-        return schemes.get(pixels[y * WIDTH + x], 0);
+        return schemes.get(pixels[y * WIDTH + x], index);
     }
 }
