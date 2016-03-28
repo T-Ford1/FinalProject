@@ -20,8 +20,8 @@ public abstract class Sprite implements Renderable {
     public static final Sprite MENUBAR = new ColorSprite("res/containers/menubar.png");
     public static final Sprite DEFAULT = new ColorSprite(Color.blue, 32, 32);
 
-    private final int WIDTH, HEIGHT;
-    private final int[] pixels;
+    protected final int WIDTH, HEIGHT;
+    protected final int[] pixels;
 
     protected Sprite(int xOff, int yOff, int w, int h, BufferedImage img) {
         WIDTH = w;

@@ -55,8 +55,8 @@ public class Background extends GraphicsComponent {
         b.addColorScheme(0xFF_00_00_00, new ColorFader(btg));
         a.addColorScheme(0xFF_30_BB_2D, new ColorFader(gtb));
         b.addColorScheme(0xFF_30_BB_2D, new ColorFader(gtb));
-        zero = new BGSprite(a, btg.length, 0, 0);
-        one = new BGSprite(b, btg.length, 0, 0);
+        zero = new BGSprite(b, btg.length, 0, 0);
+        one = new BGSprite(a, btg.length, 0, 0);
     }
 
     public void update() {
@@ -148,9 +148,9 @@ public class Background extends GraphicsComponent {
     }
 
     protected void renderPixel(int xPos, int yPos, int rgb) {
-        int replaced = Window.getPixel(xPos, yPos);
-        if ((replaced == 0xFF_00_00_00 || replaced == 0xFF_30_BB_2D)) {
+        //int replaced = Window.getPixel(xPos, yPos);
+        //if ((replaced == 0xFF_00_00_00 || replaced == 0xFF_30_BB_2D)) {
             super.renderPixel(xPos, yPos, rgb);
-        }
+        //}
     }
 }

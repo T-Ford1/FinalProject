@@ -46,4 +46,9 @@ public class BGSprite extends ColorSprite {
         this.y = y;
         return this;
     }
+    
+    public int getPixel(int x, int y) {
+        System.out.println("getpixel");
+        return schemes.get(pixels[y * WIDTH + x], 0);
+    }
 }
