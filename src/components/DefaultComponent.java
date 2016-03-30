@@ -15,7 +15,7 @@ public class DefaultComponent extends GraphicsComponent {
     }
 
     public void update() {
-        render = render ? render : hovered | pressed | alwaysRender;
+        render = render | hovered | pressed;
         setHover(isInside(Window.mouse.getPoint()));
         setPressed(hovered && Window.mouse.isPressed());
         unpress.update();
@@ -24,9 +24,7 @@ public class DefaultComponent extends GraphicsComponent {
     }
 
     public void render() {
-        if (render) {
-            renderAll();
-        }
+        renderAll();
     }
 
     public void renderAll() {

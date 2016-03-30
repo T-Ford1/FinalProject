@@ -10,6 +10,9 @@ public class Tab extends DefaultComponent {
         super(x, y, r);
         extra = l - getWidth() * 2;
     }
+    
+    public void update() {
+    }
 
     public void renderAll() {
         renderSprite();
@@ -23,5 +26,6 @@ public class Tab extends DefaultComponent {
                 renderPixel(x + getWidth() + extra, y, getWidth() - x - 1, y);
             }
         }
+        render = false;
     }
 }

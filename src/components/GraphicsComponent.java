@@ -77,15 +77,19 @@ public abstract class GraphicsComponent implements Comparable<GraphicsComponent>
     	return alwaysRender;
     }
     
+    public boolean isRender() {
+    	return render;
+    }
+    
     protected Renderable getRenderable() {
     	return !hovered ? unpress : !pressed ? hover : press;
     }
 
-    protected int getX() {
+    public final int getX() {
         return bounds.x;
     }
 
-    protected int getY() {
+    public final int getY() {
         return bounds.y;
     }
 
@@ -115,5 +119,9 @@ public abstract class GraphicsComponent implements Comparable<GraphicsComponent>
     
     public void setRender(boolean render) {
         render = true;
+    }
+    
+    public int getPixel(int x,  int y) {
+        return Window.getPixel(x + getX(), y + getY());
     }
 }

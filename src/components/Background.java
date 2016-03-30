@@ -1,5 +1,6 @@
 package components;
 
+import frame.Window;
 import graphics.Renderable;
 
 import java.awt.Color;
@@ -32,7 +33,7 @@ public class Background extends GraphicsComponent {
         for (int y = 0; y < numbers.length; y++) {
             for (int x = 0; x < numbers[y].length; x++) {
                 numbers[y][x] = (y + x) % 2 == 0;
-                renders.add(numbers[y][x] ? new BGSprite(hover, 1, x, y) : new BGSprite(press, 1, x, y));
+                renders.add(numbers[y][x] ? new BGSprite(this, hover, 1, x, y) : new BGSprite(this, press, 1, x, y));
             }
         }
         update = 0;
@@ -54,8 +55,17 @@ public class Background extends GraphicsComponent {
         b.addColorScheme(0xFF_00_00_00, new ColorFader(btg));
         a.addColorScheme(0xFF_30_BB_2D, new ColorFader(gtb));
         b.addColorScheme(0xFF_30_BB_2D, new ColorFader(gtb));
-        zero = new BGSprite(b, btg.length - 1, 0, 0);
-        one = new BGSprite(a, btg.length - 1, 0, 0);
+        zero = new BGSprite(this, b, btg.length, 0, 0);
+        one = new BGSprite(this, a, btg.length, 0, 0);
+    }
+
+    private boolean containsPos(int x, int y) {
+        for (BGSprite s : renders) {
+            if (s.getX() == x && s.getY() == y) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void update() {
@@ -66,8 +76,10 @@ public class Background extends GraphicsComponent {
                 update = 0;
                 int y = random.nextInt(numbers.length);
                 int x = random.nextInt(numbers[y].length);
-                numbers[y][x] = !numbers[y][x];
-                renders.add(numbers[y][x] ? zero.copyOf().setPosition(x, y) : one.copyOf().setPosition(x, y));
+                if (!containsPos(x, y)) {
+                    numbers[y][x] = !numbers[y][x];
+                    renders.add(numbers[y][x] ? zero.copyOf(this).setPosition(x, y) : one.copyOf(this).setPosition(x, y));
+                }
             }
             for (int i = 0; i < renders.size(); i++) {
                 BGSprite s = renders.get(i);
@@ -76,16 +88,18 @@ public class Background extends GraphicsComponent {
                     renders.remove(i--);
                 }
             }
-            render = render ? render : !renders.isEmpty() | alwaysRender;
-        } else if(type == Type.MOVING) {
-            render = render ? render : alwaysRender;
+            render = render | !renders.isEmpty() | alwaysRender;
+        } else if (type == Type.MOVING) {
+            render = render | alwaysRender;
         } else {
-            render = render ? render : alwaysRender;
+            render = render | alwaysRender;
         }
     }
 
     public void render() {
-        if(!render) return;
+        if (!render) {
+            return;
+        }
         renderAll();
     }
 
@@ -152,7 +166,7 @@ public class Background extends GraphicsComponent {
     }
 
     protected void renderPixel(int xPos, int yPos, int rgb) {
-        //int replaced = Window.getPixel(xPos, yPos);
+        //int replaced = super.getPixel(xPos, yPos);
         //if ((replaced == 0xFF_00_00_00 || replaced == 0xFF_30_BB_2D)) {
         super.renderPixel(xPos, yPos, rgb);
         //}

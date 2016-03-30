@@ -33,10 +33,10 @@ public class Window extends Canvas {
     }
 
     public void init() {
+        image = new BufferedImage(getSize().width, getSize().height, BufferedImage.TYPE_INT_RGB);
         new Background(getSize(), Type.SHIFTING);
         new MenuBar(getSize());
         new ToolBar(getSize());
-        image = new BufferedImage(getSize().width, getSize().height, BufferedImage.TYPE_INT_RGB);
         renderAll();
     }
 
@@ -69,12 +69,15 @@ public class Window extends Canvas {
 
     public void render() {
         for (GraphicsComponent c : components) {
-            c.render();
+            if(c.isRender() | c.isAlwaysRender()) {
+                c.render();
+            }
         }
     }
 
     public void renderAll() {
         for (GraphicsComponent c : components) {
+            System.out.println(c);
             c.renderAll();
         }
     }
