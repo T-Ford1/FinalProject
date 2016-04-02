@@ -1,6 +1,5 @@
 package graphics;
 
-import components.Background;
 
 /**
  *
@@ -9,23 +8,16 @@ import components.Background;
 public class BGSprite extends ColorSprite {
 
     private boolean renderedLastFrame;
-    private int x, y, updates, index;
+    private final int updates;
+    private int x, y, index;
 
-    public BGSprite(Background b, Renderable r, int u, int xPos, int yPos) {
+    public BGSprite(Renderable r, int u, int xPos, int yPos) {
         super(r);
         updates = u - 1;
         index = 0;
         x = xPos;
         y = yPos;
-        for (int y = 0; y < HEIGHT; y++) {
-            for (int x = 0; x < WIDTH; x++) {
-                int pixel = b.getPixel(x + getX(), y + getY());
-                if(pixel == 0xFF_00_00_00 | pixel == 0xFF_30_BB_2D) {
-                } else {
-                    pixels[y * WIDTH + x] = 0xFF_FF_00_FF;
-                }
-            }
-        }
+        animated = true;
     }
     
     public void update() {
@@ -49,8 +41,8 @@ public class BGSprite extends ColorSprite {
         return y;
     }
     
-    public BGSprite copyOf(Background b) {
-    	return new BGSprite(b, this, updates, x, y);
+    public BGSprite copyOf() {
+    	return new BGSprite(this, updates, x, y);
     }
     
     public BGSprite setPosition(int x, int y) {

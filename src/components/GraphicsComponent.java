@@ -4,39 +4,39 @@ import java.awt.Rectangle;
 
 import frame.Window;
 import graphics.Renderable;
+import graphics.Sprite;
 import java.awt.Point;
 import java.util.Random;
 
-public abstract class GraphicsComponent implements Comparable<GraphicsComponent> {
+public abstract class GraphicsComponent {
 
-    protected Rectangle bounds;
-    protected Renderable press, hover, unpress;
-    protected int priority;
+    protected final Rectangle bounds;
+    protected Renderable[] renderable;
     protected boolean pressed, hovered, render, alwaysRender;
     protected static final Random random = new Random();
 
-    public GraphicsComponent(int x, int y, int width, int height, Renderable u, Renderable h, Renderable p) {
-    	Window.addComponent(this);
+    public GraphicsComponent(int x, int y, int width, int height, Renderable... r) {
+        Window.addComponent(this);
         render = true;
         alwaysRender = false;
         bounds = new Rectangle(x, y, width, height);
-        priority = 1;
-        press = p;
-        hover = h;
-        unpress = u;
+        renderable = new Renderable[r.length];
+        for (int i = 0; i < r.length; i++) {
+            renderable[i] = new Sprite(r[i]);
+        }
         pressed = false;
         hovered = false;
     }
     
-    public GraphicsComponent(int x, int y, Renderable u, Renderable p, Renderable h) {
-        this(x, y, u.getWidth(), u.getHeight(), u, p, h);
-    }
-    
-    public GraphicsComponent(int x, int y, Renderable r) {
-        this(x, y, r, r, r);
+    public GraphicsComponent(int x, int y, Renderable... r) {
+        this(x, y, r[0].getWidth(), r[0].getHeight(), r);
     }
 
-    public abstract void update();
+    public void update() {
+        for (Renderable r : renderable) {
+            r.update();
+        }
+    }
 
     public abstract void render();
 
@@ -52,21 +52,13 @@ public abstract class GraphicsComponent implements Comparable<GraphicsComponent>
         }
         Window.renderPixel(getX() + x, getY() + y, rgb);
     }
+    
+    protected void renderSprite(int xOff, int yOff, Renderable r) {
+       Window.renderArray(xOff + getX(), yOff + getY(), r.getWidth(), r.getHeight(), r.getPixels());
+    }
 
     protected void renderSprite() {
-        renderSprite(getRenderable(), 0, 0);
-    }
-    
-    protected void renderSprite(int xOff, int yOff) {
-        renderSprite(getRenderable(), xOff, yOff);
-    }
-    
-    protected void renderSprite(Renderable r, int xOff, int yOff) {
-    	for (int y = 0; y < r.getHeight(); y++) {
-            for (int x = 0; x < r.getWidth(); x++) {
-                renderPixel(x + xOff, y + yOff, r.getPixel(x, y));
-            }
-        }
+        renderSprite(0, 0, getRenderable());
     }
     
     public void setAlwaysRender() {
@@ -82,7 +74,11 @@ public abstract class GraphicsComponent implements Comparable<GraphicsComponent>
     }
     
     protected Renderable getRenderable() {
-    	return !hovered ? unpress : !pressed ? hover : press;
+        if(renderable.length > 2) {
+            return !hovered ? renderable[0] : !pressed ? renderable[1] : renderable[2];
+        } else {
+            return renderable[0];
+        }
     }
 
     public final int getX() {
@@ -111,10 +107,6 @@ public abstract class GraphicsComponent implements Comparable<GraphicsComponent>
 
     protected final void setPressed(boolean p) {
         pressed = p;
-    }
-
-    public int compareTo(GraphicsComponent c) {
-        return priority - c.priority;
     }
     
     public void setRender(boolean render) {

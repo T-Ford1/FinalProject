@@ -1,5 +1,7 @@
-package components;
+package components.game;
 
+import components.DefaultComponent;
+import frame.Window;
 import java.awt.Dimension;
 
 import graphics.Sprite;

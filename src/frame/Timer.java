@@ -1,5 +1,9 @@
-
 package frame;
+
+import components.game.Background;
+import components.game.MenuBar;
+import components.title.Title;
+import components.game.ToolBar;
 import static java.awt.Toolkit.getDefaultToolkit;
 
 import java.awt.Dimension;
@@ -17,34 +21,36 @@ import main.Main;
  * @author ford.terrell
  */
 public class Timer extends JFrame implements Runnable, WindowListener {
-	private static final long serialVersionUID = 1L;
-	
-	private BufferStrategy bs;
-	private final Window panel;
-	private boolean running;
 
-	public Timer(boolean ud) {
-		Dimension screen = getDefaultToolkit().getScreenSize();
-		setAutoRequestFocus(true);
-		setPreferredSize(screen);
-		setIgnoreRepaint(true);
-		addWindowListener(this);
-		setResizable(false);
-		setUndecorated(ud);
-		add(panel = new Window());
-		pack();
-		panel.init();
-		panel.createBufferStrategy(3);
-		bs = panel.getBufferStrategy();
-		setVisible(true);
-	}
-	
-	public void start() {
-		running = true;
-		run();
-	}
+    private static final long serialVersionUID = 1L;
 
-	public void run() {
+    private static BufferStrategy bs;
+    private static Window panel;
+    private static boolean running;
+
+    public Timer() {
+        Dimension screen = getDefaultToolkit().getScreenSize();
+        setAutoRequestFocus(true);
+        setPreferredSize(screen);
+        setIgnoreRepaint(true);
+        addWindowListener(this);
+        setResizable(false);
+        setUndecorated(true);
+        add(panel = new Window());
+        pack();
+        panel.init();
+        panel.createBufferStrategy(3);
+        bs = panel.getBufferStrategy();
+        runTitle();
+        setVisible(true);
+    }
+
+    public void start() {
+        running = true;
+        run();
+    }
+
+    public void run() {
         long startTime = System.nanoTime();
         int frames_per_second = 0, ticks = 0, ticks_per_second = 0, seconds_passed = 0;
         final double ns = 1_000_000_000.0 / 60.0;
@@ -74,43 +80,51 @@ public class Timer extends JFrame implements Runnable, WindowListener {
             frames_per_second++;
         }
     }
-	
-	public void render() {
-		Graphics g = bs.getDrawGraphics();
-		g.drawImage(Window.getImage(), 0, 0, null);
-		panel.render();
-		bs.show();
-		g.dispose();
-	}
-	
-	public void update() {
-		panel.update();
-		if(!panel.screen) {
-			dispose();
-			Main.start(!isUndecorated());
-		}
-	}
-	
-	public void windowActivated(WindowEvent arg0) {
-	}
 
-	public void windowClosed(WindowEvent arg0) {
-	}
+    public void render() {
+        Graphics g = bs.getDrawGraphics();
+        g.drawImage(Window.getImage(), 0, 0, null);
+        panel.renderAll();
+        bs.show();
+        g.dispose();
+    }
 
-	public void windowDeactivated(WindowEvent arg0) {
-	}
+    public void update() {
+        panel.update();
+    }
 
-	public void windowDeiconified(WindowEvent arg0) {
-	}
+    public void windowActivated(WindowEvent arg0) {
+    }
 
-	public void windowIconified(WindowEvent arg0) {
-	}
+    public void windowClosed(WindowEvent arg0) {
+    }
 
-	public void windowOpened(WindowEvent arg0) {
-	}
+    public void windowDeactivated(WindowEvent arg0) {
+    }
 
-	public void windowClosing(WindowEvent arg0) {
-		running = false;
-		System.exit(0);
-	}
+    public void windowDeiconified(WindowEvent arg0) {
+    }
+
+    public void windowIconified(WindowEvent arg0) {
+    }
+
+    public void windowOpened(WindowEvent arg0) {
+    }
+
+    public void windowClosing(WindowEvent arg0) {
+        running = false;
+        System.exit(0);
+    }
+    
+    public static void runTitle() {
+        Window.removeAll();
+        new Title(panel.getSize());
+    }
+    
+    public static void runGame() {
+        Window.removeAll();
+        new Background(panel.getSize(), components.game.Type.SHIFTING);
+        new MenuBar(panel.getSize());
+        new ToolBar(panel.getSize());
+    }
 }

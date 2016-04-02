@@ -6,7 +6,11 @@ import graphics.SpriteSheet;
 
 public class DefaultComponent extends GraphicsComponent {
 
-    public DefaultComponent(int x, int y, Renderable s) {
+    public DefaultComponent(int x, int y, int w, int h, Renderable... s) {
+        super(x, y, w, h, s);
+    }
+
+    public DefaultComponent(int x, int y, Renderable... s) {
         super(x, y, s);
     }
 
@@ -15,12 +19,13 @@ public class DefaultComponent extends GraphicsComponent {
     }
 
     public void update() {
+        super.update();
         render = render | hovered | pressed;
+        if (pressed) {
+            onClick();
+        }
         setHover(isInside(Window.mouse.getPoint()));
         setPressed(hovered && Window.mouse.isPressed());
-        unpress.update();
-        press.update();
-        hover.update();
     }
 
     public void render() {
@@ -30,5 +35,8 @@ public class DefaultComponent extends GraphicsComponent {
     public void renderAll() {
         renderSprite();
         render = false;
+    }
+
+    protected void onClick() {
     }
 }
