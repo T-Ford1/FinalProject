@@ -34,8 +34,8 @@ public class ColorSprite extends Sprite {
         }
     }
 
-    public ColorSprite(Color c, int w, int h) {
-        super(c, w, h);
+    public ColorSprite(int rgb, int w, int h) {
+        super(rgb, w, h);
         schemes = new ColorScheme();
         animated = false;
     }

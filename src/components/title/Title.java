@@ -4,7 +4,6 @@ package components.title;
 import components.GraphicsComponent;
 import graphics.Sprite;
 import graphics.SpriteSheet;
-import java.awt.Color;
 import java.awt.Dimension;
 
 /**
@@ -16,7 +15,7 @@ public class Title extends GraphicsComponent {
     private int update;
     
     public Title(Dimension size) {
-        super(0, 0, size.width, size.height, new Sprite(Color.black, size.width, size.height));
+        super(0, 0, size.width, size.height, new Sprite(0xFF_00_00_00, size.width, size.height));
         String[] names = {"Play", "Options", "Credits", "Help", "Exit"};
         int height = 70;
         int x = (size.width - 201) / 2;

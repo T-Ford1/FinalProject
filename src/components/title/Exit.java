@@ -5,6 +5,8 @@
  */
 package components.title;
 
+import frame.Timer;
+
 /**
  *
  * @author ford.terrell
@@ -16,6 +18,6 @@ public class Exit extends Button {
     }
     
     protected void onClick() {
-        System.exit(0);
+        Timer.close();
     }
 }

@@ -1,6 +1,6 @@
 package graphics;
 
-import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public interface Renderable {
@@ -17,11 +17,7 @@ public interface Renderable {
 
     public void update();
 
-    public void setColor(Color c);
-
-    public void removeColor(Color c);
-
-    public void replaceColor(Color old, Color next);
+    public void setColor(Rectangle bounds, int rgb);
 
     public int getHeight();
 

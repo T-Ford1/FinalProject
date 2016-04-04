@@ -18,7 +18,7 @@ public class MenuBar extends DefaultComponent {
         new Tab(cX, 0, cL, height);
         int mX = cX + cL;
         int mL = Math.max(174, (screen.width - 278) / 2);
-        new Tab(mX, 0, mL, height);
+        new MessageBar(mX, 0, mL, height);
         int tX = mX + mL;
         new Tab(tX, 0, Math.max(174, screen.width - tX), height);
     }

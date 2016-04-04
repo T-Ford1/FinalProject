@@ -1,6 +1,6 @@
 package graphics;
 
-import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class Sprite implements Renderable {
     public static final Sprite GAME_STATIC = new ColorSprite("res/containers/game_static.png");
     public static final Sprite TOOLBAR = new ColorSprite("res/containers/toolbar.png");
     public static final Sprite MENUBAR = new ColorSprite("res/containers/menubar.png");
-    public static final Sprite DEFAULT = new ColorSprite(Color.blue, 32, 32);
+    public static final Sprite DEFAULT = new ColorSprite(0xFF_00_00_00, 32, 32);
 
     protected final int WIDTH, HEIGHT;
     protected final int[] pixels;
@@ -67,15 +67,15 @@ public class Sprite implements Renderable {
     /**
      * a sprite colored totally c and w wide and h high
      *
-     * @param c color
+     * @param rgb the red, green, blue color in byte form
      * @param w width
      * @param h height
      */
-    public Sprite(Color c, int w, int h) {
+    public Sprite(int rgb, int w, int h) {
         WIDTH = w;
         HEIGHT = h;
         pixels = new int[w * h];
-        setColor(c);
+        setColor(new Rectangle(0, 0, w, h), rgb);
     }
 
     /**
@@ -133,21 +133,14 @@ public class Sprite implements Renderable {
         pixels[y * WIDTH + x] = rgb;
     }
 
-    public final void setColor(Color c) {
+    /**
+     * sets the area inside bounds to the color
+     * @param bounds
+     * @param rgb
+     */
+    public final void setColor(Rectangle bounds, int rgb) {
         for (int i = 0; i < pixels.length; i++) {
-            pixels[i] = pixels[i] != 0xFF_FF_00_FF ? c.getRGB() : pixels[i];
-        }
-    }
-
-    public void removeColor(Color c) {
-        for (int i = 0; i < pixels.length; i++) {
-            pixels[i] = pixels[i] == c.getRGB() ? 0xFF_FF_00_FF : pixels[i];
-        }
-    }
-
-    public void replaceColor(Color old, Color next) {
-        for (int i = 0; i < pixels.length; i++) {
-            pixels[i] = pixels[i] == old.getRGB() ? next.getRGB() : pixels[i];
+            pixels[i] = pixels[i] != 0xFF_FF_00_FF ? rgb : pixels[i];
         }
     }
 

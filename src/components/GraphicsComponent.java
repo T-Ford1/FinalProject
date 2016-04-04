@@ -54,7 +54,7 @@ public abstract class GraphicsComponent {
     }
     
     protected void renderSprite(int xOff, int yOff, Renderable r) {
-       Window.renderArray(xOff + getX(), yOff + getY(), r.getWidth(), r.getHeight(), r.getPixels());
+       Window.renderArray(new Rectangle(xOff + getX(), yOff + getY(), r.getWidth(), r.getHeight()), r.getPixels());
     }
 
     protected void renderSprite() {

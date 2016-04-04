@@ -1,11 +1,11 @@
 package frame;
 
 import java.awt.Canvas;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import components.*;
 import input.*;
+import java.awt.Rectangle;
 import java.awt.image.DataBufferInt;
 import java.util.ArrayList;
 
@@ -50,14 +50,15 @@ public class Window extends Canvas {
         pixels[index] = rgb;
     }
 
-    public static void renderArray(int xPos, int yPos, int width, int height, int[] p) {
-        int xStart = xPos < 0 ? -xPos : 0;
-        int yStart = yPos < 0 ? -yPos : 0;
-        int xMax = xPos + width >= image.getWidth() ? image.getWidth() - (xPos) : width;
-        int yMax = yPos + height >= image.getHeight() ? image.getHeight() - (yPos) : height;
-        int xSkip = xStart + width - xMax;
-        int wSkip = image.getWidth() - width + xSkip;
-        int index1 = (yStart + yPos) * image.getWidth() + (xStart + xPos), index2 = yStart * width + xStart;
+    public static void renderArray(Rectangle img, int[] p) {
+        int xStart = img.x < 0 ? -img.x : 0;
+        //int xStart = (img.x < 0 ? -img.x : 0) + (img.x < bounds.x ? bounds.x - img.x : 0);
+        int yStart = img.y < 0 ? -img.y : 0;
+        int xMax = img.x + img.width >= image.getWidth() ? image.getWidth() -img.x : img.width;
+        int yMax = img.y + img.height >= image.getHeight() ? image.getHeight() -img.y : img.height;
+        int xSkip = xStart + img.width - xMax;
+        int wSkip = image.getWidth() - img.width + xSkip;
+        int index1 = (yStart + img.y) * image.getWidth() + (xStart + img.x), index2 = yStart * img.width + xStart;
         for (int y = yStart; y < yMax; y++, index1 += wSkip, index2 += xSkip) {
             for (int x = xStart; x < xMax; x++, index1++, index2++) {
                 renderPixel(index1, p[index2]);
