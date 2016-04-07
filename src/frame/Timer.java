@@ -1,10 +1,10 @@
 package frame;
 
 import components.game.Background;
+import components.game.Game;
 import components.game.MenuBar;
 import components.title.Title;
 import components.game.ToolBar;
-import java.awt.Color;
 import static java.awt.Toolkit.getDefaultToolkit;
 
 import java.awt.Dimension;
@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
+import net.Network;
 
 /**
  *
@@ -24,6 +25,7 @@ public class Timer extends JFrame implements Runnable {
     private static BufferStrategy bs;
     private static Window panel;
     private static boolean running;
+    private static Network io;
     
     private static final double ns = 1_000_000_000.0 / 60.0;
     private static long ticks, renders;
@@ -36,6 +38,7 @@ public class Timer extends JFrame implements Runnable {
         setResizable(false);
         setUndecorated(true);
         add(panel = new Window());
+        io = new Network();
         pack();
         panel.init();
         panel.createBufferStrategy(3);
@@ -44,6 +47,7 @@ public class Timer extends JFrame implements Runnable {
     }
 
     public void start() {
+        io.start();
         running = true;
         setVisible(true);
         run();
@@ -52,7 +56,6 @@ public class Timer extends JFrame implements Runnable {
     public void run() {
         long startTime = System.nanoTime();
         //conversion from nanoseconds to 1/60 of a second
-        
         while (running) {
             //do game updates (60 per second)
             //if scheduled for one or multiple
@@ -91,11 +94,13 @@ public class Timer extends JFrame implements Runnable {
         new Background(panel.getSize(), components.game.Type.SHIFTING);
         new MenuBar(panel.getSize());
         new ToolBar(panel.getSize());
+        new Game(panel.getSize());
     }
     
     public static void close() {
         double ratio = (double) renders / (double) ticks;
         System.out.println("Average FPS: " + (int) (60 * ratio));
+        Network.close();
         running = false;
         System.exit(0);
     }

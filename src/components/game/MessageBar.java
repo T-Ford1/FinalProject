@@ -19,20 +19,13 @@ public class MessageBar extends Tab {
 
     private Renderable message;
     private double mX;
-    private final ArrayList<String> messages;
-    private final int xMin, xMax;
+    private static final ArrayList<String> messages = new ArrayList<>();
 
     public MessageBar(int xPos, int yPos, int w, int h) {
         super(xPos, yPos, w, h);
-        messages = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            displayMessage(Integer.toHexString(random.nextInt()));
-        }
-        xMin = 85;
-        xMax = getWidth() - 85;
     }
 
-    public final void displayMessage(String m) {
+    public static final void displayMessage(String m) {
         messages.add(m);
     }
 
@@ -61,7 +54,7 @@ public class MessageBar extends Tab {
         Sprite s = new Sprite(0xFF_FF_00_FF, size * m.length(), size);
         for (int i = 0, xOff = 0; i < m.length(); i++, xOff += size) {
             int index = SpriteSheet.ALPHA.indexOf(m.charAt(i) + "");
-            Sprite let = new Sprite(size, size, SpriteSheet.ALPHABET.getSprites()[index]);
+            Sprite let = Sprite.scaleSprite(SpriteSheet.ALPHABET.getSprites()[index], size, size);
             for (int y = 0; y < let.getHeight(); y++) {
                 for (int x = 0; x < let.getWidth(); x++) {
                     s.setPixel(x + xOff, y, let.getPixel(x, y));
@@ -72,6 +65,6 @@ public class MessageBar extends Tab {
     }
     
     private void renderMessage() {
-        super.renderSprite((int) mX, 6, message);
+        renderSprite((int) mX, 6, message);
     }
 }

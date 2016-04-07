@@ -9,7 +9,7 @@ public class Tab extends DefaultComponent {
         super(xPos, yPos, w, h, Sprite.TAB, Sprite.TAB2, Sprite.TAB3);
         int width = getWidth() - renderable[0].getWidth() - renderable[2].getWidth();
         if (width != 0) {
-            renderable[1] = new Sprite(width, renderable[1].getHeight(), renderable[1]);
+            renderable[1] = Sprite.scaleSprite(renderable[1], width, renderable[1].getHeight());
         }
     }
 

@@ -20,7 +20,7 @@ public class Button extends DefaultComponent {
         int yOff = (bounds.height - size) >> 1;
         for (int i = 0; i < name.length(); i++) {
             int index = SpriteSheet.ALPHA.indexOf(name.charAt(i) + "");
-            Sprite r = new Sprite(size, size, SpriteSheet.ALPHABET.getSprites()[index]);
+            Sprite r = Sprite.scaleSprite(SpriteSheet.ALPHABET.getSprites()[index], size, size);
             int xPos = xOff + i * size;
             renderable[0] = combineSprites(renderable[0], r, xPos, yOff);
             renderable[1] = combineSprites(renderable[1], r, xPos, yOff);

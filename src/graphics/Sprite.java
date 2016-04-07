@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 public class Sprite implements Renderable {
 
     public static final Sprite RAINBOW = new ColorSprite("res/animations/rainbow.png");
+    public static final Sprite MOTHERBOARD = new ColorSprite("res/animations/motherboard.png");
     public static final Sprite TAB = new ColorSprite("res/components/tab1.png");
     public static final Sprite TAB2 = new ColorSprite("res/components/tab2.png");
     public static final Sprite TAB3 = new ColorSprite("res/components/tab3.png");
@@ -40,28 +41,6 @@ public class Sprite implements Renderable {
         HEIGHT = h;
         pixels = new int[w * h];
         img.getRGB(xOff, yOff, w, h, pixels, 0, w);
-    }
-
-    /**
-     * creates a sprite stretch or shrink to the width and height required
-     * from the Renderable r
-     *
-     * @param w width
-     * @param h height
-     * @param r the original sprite
-     */
-    public Sprite(int w, int h, Renderable r) {
-        WIDTH = w;
-        HEIGHT = h;
-        pixels = new int[w * h];
-        int index = 0;
-        for (int y = 0; y < h; y++) {
-            int yPos = (int) (((double) y / h) * r.getHeight());
-            for (int x = 0; x < w; x++) {
-                int xPos = (int) (((double) x / w) * r.getWidth());
-                pixels[index++] = r.getPixel(xPos, yPos);
-            }
-        }
     }
 
     /**
@@ -157,5 +136,30 @@ public class Sprite implements Renderable {
 
     public Sprite copyOf() {
         return new Sprite(this);
+    }
+    
+    public static Sprite scaleSprite(Renderable r, double scale) {
+        return scaleSprite(r, (int) (r.getWidth() * scale), (int) (r.getHeight() * scale));
+    }
+    
+    /**
+     * creates a sprite stretch or shrink to the width and height required
+     * from the Renderable r
+     *
+     * @param w width
+     * @param h height
+     * @param r the original sprite
+     */
+    public static Sprite scaleSprite(Renderable r, int w, int h) {
+        Sprite toRet = new Sprite(0xFF_00_00_00, w, h);
+        int index = 0;
+        for (int y = 0; y < h; y++) {
+            int yPos = (int) (((double) y / h) * r.getHeight());
+            for (int x = 0; x < w; x++) {
+                int xPos = (int) (((double) x / w) * r.getWidth());
+                toRet.pixels[index++] = r.getPixel(xPos, yPos);
+            }
+        }
+        return toRet;
     }
 }

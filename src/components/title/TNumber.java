@@ -22,7 +22,7 @@ public class TNumber extends GraphicsComponent {
     private double xV, yV, xC, yC;
     
     public TNumber(Rectangle size, Renderable r, double scale) {
-        super(0, 0, new Sprite((int) (r.getWidth() * scale), (int) (r.getHeight() * scale), r));
+        super(0, 0, Sprite.scaleSprite(r, scale));
         screen = size;
         int height = renderable[0].getHeight(), width = renderable[0].getWidth();
         int type = random.nextInt(4);
