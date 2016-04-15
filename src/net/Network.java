@@ -1,7 +1,11 @@
 package net;
 
 import components.game.MessageBar;
-import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -10,18 +14,42 @@ import java.io.IOException;
 public class Network extends Thread {
 
     public static IOGate io;
-    private static boolean connected;
+    public static boolean connected;
+    public static String name;
+    public static int id;
 
     public Network() {
-        tryConnect();
+        try {
+            tryConnect();
+        } catch (Exception ex) {
+            io = null;
+            connected = false;
+            System.err.println("connection refused");
+        }
+        if(connected) {
+            System.out.println("User Data : " + name + ", " + id);
+        }
     }
 
-    public static final void tryConnect() {
+    public static final void tryConnect() throws Exception {
         try {
-            io = new IOGate();
-            connected = true;
-        } catch (IOException ex) {
-            connected = false;
+            Scanner keyb = new Scanner(new File("res/net/client.dat"));
+            id = Integer.parseInt(keyb.nextLine());
+            name = keyb.nextLine();
+        } catch (FileNotFoundException ex) {
+            id = -1;
+            name = JOptionPane.showInputDialog("What is your name?", "Input name");
+        }
+        io = new IOGate();
+        connected = true;
+        io.output(id + "");
+        io.output(name);
+        if (id == -1) {
+            id = Integer.parseInt(io.getInput());
+        }
+        try (PrintWriter pr = new PrintWriter("res/net/client.dat")) {
+            pr.println(id);
+            pr.print(name);
         }
     }
 
@@ -30,13 +58,13 @@ public class Network extends Thread {
             try {
                 parseInput(io.getInput());
             } catch (Exception ex) {
-                ex.printStackTrace();
+                System.err.println(ex.getMessage());
+                connected = false;
             }
         }
     }
 
     public static void parseInput(String in) {
-        io.output("0 got input");
         if (in.startsWith("0")) {
             MessageBar.displayMessage(in.substring(2));
         } else if (in.startsWith("1")) {

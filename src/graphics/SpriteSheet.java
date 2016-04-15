@@ -17,7 +17,7 @@ public class SpriteSheet {
     public static final SpriteSheet DIGIT_SHIFT = new SpriteSheet("res/animations/digitshift.png", 72, 128);
     public static final SpriteSheet NUMBER_64 = new SpriteSheet("res/animations/number.png", 64, 120);
     public static final SpriteSheet ALPHABET = new SpriteSheet("res/animations/alpha.png", 32, 32);
-    public static final String ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!?()-=+[]%' ";
+    public static final String ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!?()-=+[]%' .";
 
     public final int COLUMNS, ROWS;
     private final Sprite[] sprites;

@@ -54,6 +54,10 @@ public class MessageBar extends Tab {
         Sprite s = new Sprite(0xFF_FF_00_FF, size * m.length(), size);
         for (int i = 0, xOff = 0; i < m.length(); i++, xOff += size) {
             int index = SpriteSheet.ALPHA.indexOf(m.charAt(i) + "");
+            if(index < 0) {
+                System.out.println("found unparseable char: " + m.charAt(i));
+                continue;
+            }
             Sprite let = Sprite.scaleSprite(SpriteSheet.ALPHABET.getSprites()[index], size, size);
             for (int y = 0; y < let.getHeight(); y++) {
                 for (int x = 0; x < let.getWidth(); x++) {
